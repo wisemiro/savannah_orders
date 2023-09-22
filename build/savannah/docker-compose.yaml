@@ -1,0 +1,29 @@
+version: "3.8"
+
+services:
+  order_db:
+    image: postgres:latest
+    container_name: order_db
+    restart: always
+    networks:
+      savannah:
+        aliases:
+          - database
+    environment:
+       POSTGRES_USER: ${DB_USER}
+       POSTGRES_PASSWORD: ${DB_PASSWORD}
+       POSTGRES_DB: ${DB_NAME}
+       DATABASE_HOST: ${DB_HOST}
+    ports:
+      - "5432:5432"
+    volumes:
+      - dbdata:/var/lib/postgresql/data
+
+volumes:
+  dbdata:
+  cache:
+    driver: local
+
+networks:
+  savannah:
+    driver: bridge
